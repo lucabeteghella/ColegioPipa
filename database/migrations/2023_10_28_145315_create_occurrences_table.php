@@ -16,10 +16,10 @@ return new class extends Migration
             $table->timestamps();
             $table->string('title');
             $table->string('description');
-            $table->unsignedBigInteger('guardians_id');
-            $table->unsignedBigInteger('students_id');
-            $table->foreign('students_id')->references('id')->on('students');
-            $table->foreign('guardians_id')->references('id')->on('guardians');
+            $table->unsignedBigInteger('guardian_id');
+            $table->unsignedBigInteger('student_id');
+            $table->foreign('student_id')->references('id')->on('students');
+            $table->foreign('guardian_id')->references('id')->on('guardians');
         });
     }
 
