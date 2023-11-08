@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('occurrences', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title');
             $table->string('description');
             $table->unsignedBigInteger('guardian_id');
             $table->unsignedBigInteger('student_id');
+            $table->timestamps();
             $table->foreign('student_id')->references('id')->on('students');
             $table->foreign('guardian_id')->references('id')->on('guardians');
         });

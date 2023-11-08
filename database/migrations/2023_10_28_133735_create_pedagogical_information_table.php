@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('pedagogical_information', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
             $table->string('title');
             $table->string('content');
             $table->string('category');
             $table->unsignedBigInteger('image_id');
+            $table->timestamps();
             $table->foreign('image_id')->references('id')->on('image');
         });
     }
