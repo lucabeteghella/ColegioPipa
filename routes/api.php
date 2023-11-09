@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AnnouncementController;
+use App\Http\Controllers\PostController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -27,3 +28,9 @@ Route::prefix('announcements')
     ->group(function () {
         Route::get('/', 'index');
 });
+
+Route::prefix('posts')
+    ->controller(PostController::class)
+    ->group(function () {
+        Route::get('/', 'index');
+    });
