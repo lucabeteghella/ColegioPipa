@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-class BaseRepository 
+abstract class BaseRepository 
 {
 
     protected $model;
@@ -21,5 +21,12 @@ class BaseRepository
 
     public function getOne($id) {
         return $this->model->findOrFail($id);
+    }
+
+    public function deleteOne($id) {
+        $data = $this->getOne($id);
+        $data->delete();
+        
+        return $data;
     }
 }

@@ -10,5 +10,4 @@ class PostRepository extends BaseRepository
 
     protected $model = Post::class;
 
-    
 }

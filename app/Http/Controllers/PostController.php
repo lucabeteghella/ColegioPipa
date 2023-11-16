@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Repositories\PostRepository;
 use App\Models\Post;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    use ApiResponser;
 
     protected $repo;
 
@@ -20,7 +22,8 @@ class PostController extends Controller
      */
     public function index()
     {
-        return $this->repo->getAll();
+        $data = $this->repo->getAll();
+        return $this->successResponse($data);
     }
 
     /**
@@ -36,7 +39,8 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = $this->repo->getOne($id);
+        return $this->successResponse($data);
     }
 
     /**
@@ -52,6 +56,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $data = $this->repo->deleteOne($id);
+        return $this->successResponse($data);
     }
 }

@@ -33,4 +33,6 @@ Route::prefix('posts')
     ->controller(PostController::class)
     ->group(function () {
         Route::get('/', 'index');
+        Route::get('/{id}', 'show');
+        Route::delete('/{id}', 'destroy');
     });
