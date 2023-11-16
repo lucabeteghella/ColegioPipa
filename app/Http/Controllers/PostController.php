@@ -31,7 +31,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $this->repo->addPost($request);
+        return $this->successResponse($data);
     }
 
     /**
@@ -48,7 +49,8 @@ class PostController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $data = $this->repo->updatePost($request, $id);
+        return $this->successResponse($data);
     }
 
     /**
