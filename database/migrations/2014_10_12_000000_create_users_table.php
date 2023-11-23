@@ -17,9 +17,11 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('phone_number');
             $table->string('cpf')->unique();
+            $table->integer('permission_id');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

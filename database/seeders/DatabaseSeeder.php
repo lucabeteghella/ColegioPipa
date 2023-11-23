@@ -25,7 +25,12 @@ class DatabaseSeeder extends Seeder
             ['title'=> 'announcements'],
             ['title'=> 'occurrences']
         ];
-
         DB::table('categories')->insert($categories);
+
+        $permissions = [
+            ['permission' => 'All permissions'],
+            ['permission'=> 'Regular user'],
+        ];
+        DB::table('permissions')->insert($permissions);
     }
 }
