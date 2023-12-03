@@ -19,4 +19,15 @@ class User extends Authenticatable
         'permission_id',
         'password'
     ];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'deleted_at'
+    ];
+
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+        'password'=> 'hashed'
+    ];
 }

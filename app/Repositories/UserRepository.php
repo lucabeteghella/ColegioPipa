@@ -13,12 +13,10 @@ class UserRepository extends BaseRepository
 
     protected $model = User::class;
 
-    public function addUser(Request $request) {
-        $userData = $request->only('name', 'email', 'phone_number', 'cpf', 'permission_id', 'password');
-
+    public function addUser($data) {
         DB::beginTransaction();
         try {
-            $newUser = $this->model->create($userData);
+            $newUser = $this->model->create($data);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -28,14 +26,12 @@ class UserRepository extends BaseRepository
         return $newUser;
     }
 
-    public function updateUser(Request $request, string $id) {
-        $userData = $request->only('name', 'email', 'phone_number', 'cpf', 'password');
-
+    public function updateUser($data, string $id) {
         DB::beginTransaction();
         try {
             $user = $this->getOne($id);
 
-            $user->fill($userData);
+            $user->fill($data);
             $updateUser = $user->save();
 
             DB::commit();

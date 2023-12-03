@@ -33,7 +33,7 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->repo->addUser($request);
+        $data = $this->repo->addUser($request->all());
         return $this->successResponse($data);
     }
 
@@ -51,7 +51,7 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data = $this->repo->updateUser($request, $id);
+        $data = $this->repo->updateUser($request->all(), $id);
         return $this->successResponse($data);
     }
 
