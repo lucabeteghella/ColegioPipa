@@ -22,7 +22,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $data = $this->repo->getAll();
+        $data = $this->repo->getAllPost();
         return $this->successResponse($data);
     }
 
@@ -31,7 +31,8 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $this->repo->addPost($request);
+        $imageContent = $request->file('image')->get();
+        $data = $this->repo->addPost($request, $imageContent);
         return $this->successResponse($data);
     }
 
@@ -58,7 +59,7 @@ class PostController extends Controller
      */
     public function destroy(string $id)
     {
-        $data = $this->repo->deleteOne($id);
+        $data = $this->repo->deleteOnePost($id);
         return $this->successResponse($data);
     }
 }
