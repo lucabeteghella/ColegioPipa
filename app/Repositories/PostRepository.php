@@ -17,19 +17,22 @@ class PostRepository extends BaseRepository
         return Post::with('image')->get();
     }
 
-    public function addPost(Request $request, $imageContent)
+    public function addPost(Request $request)
     {
-        $imageBase64 = base64_encode($imageContent);
-
-        $image = Image::create([
-            'image' => $imageBase64,
-        ]);
-
-        $postData = $request->only('title', 'description', 'category_id', 'tag_id');
-        $postData['image_id'] = $image->id;
+        $imageContent = $request->hasFile('image') ? $request->file('image')->get() : null;
 
         DB::beginTransaction();
         try {
+            if ($imageContent) {
+                $imageBase64 = base64_encode($imageContent);
+                $image = Image::create([
+                    'image' => $imageBase64,
+                ]);
+            }
+
+            $postData = $request->only('title', 'description', 'category_id', 'tag_id');
+            $postData['image_id'] = $image->id ?? null;
+
             $newPost = Post::create($postData);
             DB::commit();
         } catch (Exception $e) {
@@ -44,54 +47,54 @@ class PostRepository extends BaseRepository
     {
         $postData = $request->only('title', 'description', 'category_id', 'tag_id');
         $imageContent = $request->hasFile('image') ? $request->file('image')->get() : null;
-    
+
         DB::beginTransaction();
         try {
             $updatedPost = $this->getOne($id);
-            
+
             $updatedPost->fill($postData);
             $updatedPost->save();
-    
+
             if ($imageContent) {
                 $imageBase64 = base64_encode($imageContent);
-    
+
                 $image = Image::create([
                     'image' => $imageBase64,
                 ]);
-    
+
                 $updatedPost->image_id = $image->id;
                 $updatedPost->save();
             }
-    
+
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
             throw new Exception("Erro ao atualizar post: " . $e->getMessage());
         }
-    
+
         return $updatedPost;
     }
 
     public function deleteOnePost($id)
-{
-    DB::beginTransaction();
-    try {
-        $data = $this->getOne($id);
+    {
+        DB::beginTransaction();
+        try {
+            $data = $this->getOne($id);
 
-        if ($data->image) {
-            Image::destroy($data->image->id);
+            if ($data->image) {
+                Image::destroy($data->image->id);
+            }
+
+            $data->delete();
+
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception("Erro ao excluir post: " . $e->getMessage());
         }
 
-        $data->delete();
-
-        DB::commit();
-    } catch (Exception $e) {
-        DB::rollBack();
-        throw new Exception("Erro ao excluir post: " . $e->getMessage());
+        return $data;
     }
-
-    return $data;
-}
 
 }
 

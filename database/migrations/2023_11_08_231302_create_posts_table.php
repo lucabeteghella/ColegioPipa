@@ -17,9 +17,10 @@ return new class extends Migration
             $table->string('description');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
-            $table->foreignId('image_id')->constrained('images');
+            $table->foreign('image_id')->references('id')->on('images');
         });
     }
 

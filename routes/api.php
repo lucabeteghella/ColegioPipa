@@ -21,26 +21,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-/*
-    Announcements
-*/
-Route::prefix('announcements')
-    ->controller(AnnouncementController::class)
-    ->group(function () {
-        Route::get('/', 'index');
-});
-
-Route::prefix('posts')  
+Route::prefix('posts')
     ->controller(PostController::class)
     ->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
         Route::put('/update/{id}', 'update');
         Route::get('/{id}', 'show');
-        Route::delete('/{id}', 'destroy');
+        Route::delete('/delete/{id}', 'destroy');
     });
 
-    Route::prefix('users')  
+    Route::prefix('users')
     ->controller(UserController::class)
     ->group(function () {
         Route::get('/', 'index');

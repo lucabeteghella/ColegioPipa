@@ -31,8 +31,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $imageContent = $request->file('image')->get();
-        $data = $this->repo->addPost($request, $imageContent);
+        $data = $this->repo->addPost($request);
         return $this->successResponse($data);
     }
 
