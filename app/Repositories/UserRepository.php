@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Image;
 use App\Models\User;
+use App\Traits\ApiResponser;
 use ErrorException;
 use Exception;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\DB;
 
 class UserRepository extends BaseRepository
 {
+    use ApiResponser;
 
     protected $model = User::class;
 
@@ -41,7 +43,7 @@ class UserRepository extends BaseRepository
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());
+            return $this->errorResponse($e->getMessage());
         }
 
         return $newUser;
@@ -62,14 +64,15 @@ class UserRepository extends BaseRepository
             $userData->fill($updatedUser);
             $userData->save();
 
-            $userData->image()->update([
-                'image' => $updatedUser['image']
-            ]);
-
+            if ($imageContent) {
+                $userData->image()->update([
+                    'image' => $updatedUser['image']
+                ]);
+            }
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
-            throw new Exception($e->getMessage());
+            return $this->errorResponse($e->getMessage());
         }
 
         return $updatedUser;
