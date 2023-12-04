@@ -16,8 +16,8 @@ trait ApiResponser {
             [
                 "success" => true,
                 "code" => $code,
-                "data" => $data 
-            ], 
+                "data" => $data
+            ],
         $code);
     }
 
@@ -27,13 +27,13 @@ trait ApiResponser {
      * @param int $code
      * @return \Illuminate\Http\JsonResponse
      */
-    public function errorResponse(string $msg = "", $code = Response::HTTP_BAD_REQUEST) {
+    public function errorResponse(string|array $msg = "", $code = Response::HTTP_BAD_REQUEST) {
         return response()->json(
             [
                 "success" => false,
                 "code" => $code,
                 "message" => $msg
-            ], 
+            ],
         $code);
     }
 

@@ -26,17 +26,17 @@ Route::prefix('posts')
     ->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::put('/update/{id}', 'update');
+        Route::post('/update/{id}', 'update');
         Route::get('/{id}', 'show');
         Route::delete('/delete/{id}', 'destroy');
     });
 
-    Route::prefix('users')
+Route::prefix('users')
     ->controller(UserController::class)
     ->group(function () {
         Route::get('/', 'index');
         Route::post('/', 'store');
-        Route::put('/update/{id}', 'update');
+        Route::post('/update/{id}', 'update');
         Route::get('/{id}', 'show');
         Route::delete('/{id}', 'destroy');
     });

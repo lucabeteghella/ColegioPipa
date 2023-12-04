@@ -17,7 +17,7 @@ class PostRepository extends BaseRepository
         return Post::with('image')->get();
     }
 
-    public function addPost(Request $request)
+    public function addPost($request)
     {
         $imageContent = $request->hasFile('image') ? $request->file('image')->get() : null;
 
@@ -43,28 +43,31 @@ class PostRepository extends BaseRepository
         return $newPost;
     }
 
-    public function updatePost(Request $request, string $id)
+    public function getOnePost($id)
     {
-        $postData = $request->only('title', 'description', 'category_id', 'tag_id');
+        return Post::where('id', $id)->with('image')->get();
+    }
+
+    public function updatePost(string $id, $request)
+    {
         $imageContent = $request->hasFile('image') ? $request->file('image')->get() : null;
 
         DB::beginTransaction();
         try {
-            $updatedPost = $this->getOne($id);
-
-            $updatedPost->fill($postData);
-            $updatedPost->save();
+            $postData = $this->getOne($id);
 
             if ($imageContent) {
                 $imageBase64 = base64_encode($imageContent);
-
                 $image = Image::create([
                     'image' => $imageBase64,
                 ]);
-
-                $updatedPost->image_id = $image->id;
-                $updatedPost->save();
             }
+
+            $updatedPost = $request->only('title', 'description', 'category_id', 'tag_id');
+            $updatedPost['image_id'] = $image->id ?? null;
+
+            $postData->fill($updatedPost);
+            $postData->save();
 
             DB::commit();
         } catch (Exception $e) {
@@ -72,7 +75,7 @@ class PostRepository extends BaseRepository
             throw new Exception("Erro ao atualizar post: " . $e->getMessage());
         }
 
-        return $updatedPost;
+        return $postData;
     }
 
     public function deleteOnePost($id)

@@ -18,10 +18,12 @@ return new class extends Migration
             $table->string('phone_number');
             $table->string('cpf')->unique();
             $table->integer('permission_id');
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
             $table->softDeletes();
+            $table->foreign('image_id')->references('id')->on('images');
         });
     }
 

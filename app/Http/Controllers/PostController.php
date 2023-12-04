@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\PostStoreRequest;
+use App\Http\Requests\Post\PostUpdateRequest;
 use App\Repositories\PostRepository;
 use App\Models\Post;
 use App\Traits\ApiResponser;
@@ -29,7 +31,7 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostStoreRequest $request)
     {
         $data = $this->repo->addPost($request);
         return $this->successResponse($data);
@@ -40,16 +42,16 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        $data = $this->repo->getOne($id);
+        $data = $this->repo->getOnePost($id);
         return $this->successResponse($data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(string $id, PostUpdateRequest $request)
     {
-        $data = $this->repo->updatePost($request, $id);
+        $data = $this->repo->updatePost($id, $request);
         return $this->successResponse($data);
     }
 

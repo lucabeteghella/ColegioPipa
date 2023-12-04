@@ -17,6 +17,7 @@ class User extends Authenticatable
         'phone_number',
         'cpf',
         'permission_id',
+        'image_id',
         'password'
     ];
 
@@ -30,4 +31,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password'=> 'hashed'
     ];
+
+    public function image()
+    {
+        return $this->hasOne(Image::class, 'id');
+    }
 }
