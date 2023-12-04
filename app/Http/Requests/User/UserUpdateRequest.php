@@ -24,7 +24,6 @@ class UserUpdateRequest extends FormRequest
         return [
             'name' => 'string',
             'email' => 'unique:users,email',
-            'phone_number' => 'required',
             'cpf' => 'unique:users,cpf',
             'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg|image:jpg,png,jpeg',
             'permission_id' => 'exists:permissions,id',
