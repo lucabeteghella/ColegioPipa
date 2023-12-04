@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->integer('image_id');
             $table->unsignedBigInteger('category_id');
             $table->unsignedBigInteger('tag_id');
             $table->timestamps();
             $table->softDeletes();
+            $table->foreignId('image_id')->constrained('images');
         });
     }
 

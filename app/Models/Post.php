@@ -17,4 +17,9 @@ class Post extends Model
         'category_id',
         'tag_id'
     ];
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
+    }
 }
