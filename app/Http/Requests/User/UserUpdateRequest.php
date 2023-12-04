@@ -23,8 +23,6 @@ class UserUpdateRequest extends FormRequest
     {
         return [
             'name' => 'string',
-            'email' => 'unique:users,email',
-            'cpf' => 'unique:users,cpf',
             'image' => 'file|mimetypes:image/png,image/jpg,image/jpeg|image:jpg,png,jpeg',
             'permission_id' => 'exists:permissions,id',
             'password' => 'min:4|max:16'
@@ -34,8 +32,6 @@ class UserUpdateRequest extends FormRequest
     public function messages()
     {
         return [
-            'email.unique' => 'O email já existe no sistema',
-            'cpf.unique' => 'O CPF já existe no sistema',
             'image.image:jpg,png,jpeg' => 'A imagem precisa ser um dos seguintes formatos: jpg, png, jpeg',
             'permission_id.exists' => 'Tipo de permissão não existente',
             'password.min' => 'A senha deve ter entre 8 e 16 caracteres',
