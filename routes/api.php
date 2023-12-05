@@ -47,5 +47,5 @@ Route::prefix('users')
         Route::post('/', 'store')->withoutMiddleware('auth:sanctum');
         Route::post('/update/{id}', 'update');
         Route::get('/{id}', 'show');
-        Route::delete('/{id}', 'destroy');
+        Route::delete('/delete/{id}', 'destroy');
     });
