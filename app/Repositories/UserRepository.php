@@ -33,13 +33,13 @@ class UserRepository extends BaseRepository
         try {
             $userData = $request->validated();
 
+            $newUser = User::create($userData);
+
             if ($imageContent) {
                 $imageBase64 = base64_encode($imageContent);
                 $userData['image'] = $imageBase64;
+                $newUser->image()->create($userData);
             }
-
-            $newUser = User::create($userData);
-            $newUser->image()->create($userData);
             DB::commit();
         } catch (Exception $e) {
             DB::rollBack();
@@ -57,14 +57,11 @@ class UserRepository extends BaseRepository
             $userData = $this->getOne($id);
             $updatedUser = $request->validated();
 
-            if ($imageContent) {
-                $updatedUser['image'] = base64_encode($imageContent);
-            }
-
             $userData->fill($updatedUser);
             $userData->save();
 
             if ($imageContent) {
+                $updatedUser['image'] = base64_encode($imageContent);
                 $userData->image()->update([
                     'image' => $updatedUser['image']
                 ]);
