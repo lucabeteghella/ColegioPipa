@@ -55,7 +55,7 @@ class UserRepository extends BaseRepository
         DB::beginTransaction();
         try {
             $userData = $this->getOne($id);
-            $updatedUser = $request->validated();
+            $updatedUser = $request->all();
 
             $userData->fill($updatedUser);
             $userData->save();
