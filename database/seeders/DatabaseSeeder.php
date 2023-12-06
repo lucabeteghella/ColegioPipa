@@ -3,8 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -13,23 +13,21 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // \App\Models\User::factory(10)->create();
-
-        // \App\Models\User::factory()->create([
-        //     'name' => 'Test User',
-        //     'email' => 'test@example.com',
-        // ]);
-
         $categories = [
-            ['title' => 'Pedagogical information'],
-            ['title'=> 'announcements'],
-            ['title'=> 'occurrences']
+            ['title' => 'Dicas'],
+            ['title'=> 'Avisos'],
         ];
         DB::table('categories')->insert($categories);
 
+        $tags = [
+            ['title' => 'Alimentação'],
+            ['title'=> 'Atividade física'],
+        ];
+        DB::table('tags')->insert($tags);
+
         $permissions = [
-            ['permission' => 'All permissions'],
-            ['permission'=> 'Regular user'],
+            ['permission' => 'Admin'],
+            ['permission'=> 'Comum'],
         ];
         DB::table('permissions')->insert($permissions);
     }
