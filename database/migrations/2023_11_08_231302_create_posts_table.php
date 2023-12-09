@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('pedagogical_information', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('content');
-            $table->string('category');
-            $table->unsignedBigInteger('image_id');
+            $table->text('description');
+            $table->unsignedBigInteger('category_id');
+            $table->unsignedBigInteger('tag_id');
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('image_id')->references('id')->on('images');
         });
     }
 
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('pedagogical_information');
+        Schema::dropIfExists('posts');
     }
 };

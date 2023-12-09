@@ -15,10 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone_number');
+            $table->string('cpf')->unique();
+            $table->integer('permission_id');
+            $table->unsignedBigInteger('image_id')->nullable();
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->softDeletes();
+            $table->foreign('image_id')->references('id')->on('images');
         });
     }
 
